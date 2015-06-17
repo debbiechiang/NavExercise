@@ -9,7 +9,80 @@
 </head>
 
 <body>
-<h1>Hello.</h1>
+<header class="header">
+  <!-- HEADER BAR -->
+  <div class="header__bar">
+    <!-- HUGE LOGO -->
+    <h1 class="header__logo">
+      <a href="#">Huge</a>
+    </h1>
+    <!-- BURGER ICON -->
+    <a class="menu__toggle" href="#">
+      <div href="#" class="header__icon header__icon--burger"></div>
+    </a>
+  </div>
+
+
+  <!-- HEADER NAV -->
+  <nav class="menu menu--open" role="navigation">
+    <div class="menu__itemContainer">
+      <div class="menu__item">
+        <a class="menu__link menu__link--primary" href="#">Work</a>
+      </div>
+      <div class="menu__item menu__item--open">
+        <a class="menu__link menu__link--primary" href="#">About<span class="menu__chevron"></span></a>
+        <nav class="menu__submenu">
+          <a class="menu__link menu__link--secondary" href="#">Client Services</a>
+          <a class="menu__link menu__link--secondary" href="#">Creative</a>
+          <a class="menu__link menu__link--secondary" href="#">Operations</a>
+          <a class="menu__link menu__link--secondary" href="#">Technology</a>
+          <a class="menu__link menu__link--secondary" href="#">People</a>
+        </nav>
+      </div>
+      <div class="menu__item menu__item--open">
+        <a class="menu__link menu__link--primary" href="#">Careers<span class="menu__chevron menu__chevron--active"></span></a>
+
+        <nav class="menu__submenu menu__submenu--open">
+          <a class="menu__link menu__link--secondary" href="#">Client Services</a>
+          <a class="menu__link menu__link--secondary" href="#">Creative</a>
+          <a class="menu__link menu__link--secondary" href="#">Operations</a>
+          <a class="menu__link menu__link--secondary" href="#">Technology</a>
+          <a class="menu__link menu__link--secondary" href="#">People</a>
+        </nav>
+      </div>
+      <div class="menu__item">
+        <a class="menu__link menu__link--primary" href="#">Ideas</a>
+      </div>
+      <div class="menu__item">
+        <a class="menu__link menu__link--primary" href="#">News</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2014 Huge. All Rights Reserved.</p>
+    </div>
+  </nav>
+</header>
+
+<div class="content__wrapper content__wrapper--push">
+  <!-- SPLASH IMAGE -->
+  <div class="splash__img"></div>
+
+  <!-- CONTENT AREA -->
+  <div class="content">
+    <header class="content__header">
+      <h1 class="content__title">Get paid for giving a shit.</h1>
+    </header>
+    <section class="content__copy">
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+    </section>
+  </div>
+
+  <!-- DIMMER -->
+  <div class="content__dimmer content__dimmer--on"></div>
+</div>
+
 <script src="/js/all.js"></script>
 <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
 </body>
