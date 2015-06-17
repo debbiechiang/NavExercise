@@ -145,14 +145,16 @@ a {
 .menu--open {
 	transform: translateX(100vw);
 	overflow: auto;
+}
+.menu__flexContainer {
+	min-height: calc(100vh - #{$headerHeightMobile});
 	display: flex;
 	flex-direction: column; 
 }
 .menu__itemContainer {
-	// padding-top: 12px;
+	padding-top: 12px;
 	flex: 1 1 auto;
 	overflow-y: auto;
-	min-height: 0;
 }
 .menu__link {
 	padding-left: 24px;
@@ -202,6 +204,15 @@ a {
 	overflow: hidden;
 	transition: all 0.5s;
 	transition-timing-function: ease-in;	
+}
+.menu__copyright {
+	padding: 0 24px;
+	height: 48px;
+	p {
+		-webkit-margin-before: 0;
+		-webkit-margin-after: 0;
+		font: 12px/48px "Helvetica Nueue", helvetica, sans-serif;
+	}
 }
 
 // SUBMENU OPEN STATE
