@@ -6,10 +6,17 @@ $white: #ffffff;
 $transBlack: rgba(0,0,0,.5);
 
 // BREAKPOINTS 
+$bp: 768px;
 
-// MEASUREMENTS
+// VARIABLES
+$transitionSpeed: .3s;
+
 $headerHeightMobile: 60px;
 $headerHeightDesktop: 72px;
 
 $headerPaddingMobileVertical: 20px;
 $headerPaddingMobileHorizontal: 24px;
+$headerPaddingDesktopVertical: 24px;
+$headerPaddingDesktopHorizontal: 24px;
+
+

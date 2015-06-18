@@ -1,12 +1,3 @@
-// Build menu
-//    Get JSON 
-//    Parse JSON
-//    Inject it into the DOM
-// Mobile menu functionality
-//    
-// Init everything 
-//    Add event handling
-
 /** 
  * Retrieves the JSON from the API 
  * Builds the menu and injects it into the DOM
@@ -95,6 +86,7 @@ var BuildMenu = (function(){
     var link = document.createElement('a');
     link.setAttribute('href', el.url);
     link.classList.add('menu__link', (isPrimary) ? 'menu__link--primary' : 'menu__link--secondary');
+    link.setAttribute('tabindex', (isPrimary) ? 0 : -1);
     link.innerHTML = el.label;
     
     if (hasSubNav) {
@@ -123,9 +115,12 @@ var BuildMenu = (function(){
  */
 var MobileNav = (function(){
   // private
-  var $dimmer = document.querySelector('.content__dimmer');
+  var $mobileDimmer = document.querySelector('.content__dimmer--mobile');
+  var $desktopDimmer = document.querySelector('.content__dimmer--desktop');
   var $content = document.querySelector('.content__wrapper');
+  var $body = document.querySelector('body');
   var $menuToggle = document.querySelector('.menu__toggle');
+  var $headerLogo = document.querySelector('.header__logo');
 
   var $menu; 
   
@@ -145,28 +140,44 @@ var MobileNav = (function(){
     if ($menu.closest('.menu--open')){
       this.closeAllSubnav();
     }
-    $dimmer.classList.toggle('content__dimmer--on');
-    $content.classList.toggle('content__wrapper--push');
     $menuToggle.classList.toggle('menu__toggle--on');
     $menu.classList.toggle('menu--open');
+    $headerLogo.classList.toggle('header__logo--on');
+    $body.classList.toggle('lock');
+    $mobileDimmer.classList.toggle('content__dimmer--on');
+    $content.classList.toggle('content__wrapper--push');
   };
 
   /** 
    * Toggle an individual subnav. Show/hide subnav, turns carat.
+   * node: [object] DOM node that identifies the subnav to toggle
    */
   MobileNav.prototype.toggleSubnav = function(node){
     var parentNode = node.closest('.menu__item');
+
+    // if toggling to open, turn on the desktop dimmer. 
+    if (!parentNode.classList.contains('menu__item--open')){
+      $desktopDimmer.classList.add('content__dimmer--on');
+    }
+
+    // toggle the subnav
     parentNode.classList.toggle('menu__item--open');
+
+    // Toggle subnav link tabindex to preserve mobile menu accessibility
+    var subnavLink = parentNode.querySelectorAll('.menu__link--secondary');
+    Array.prototype.slice.call(subnavLink).forEach(function(el){
+      var tabindex = el.getAttribute('tabindex');
+      el.setAttribute('tabindex', (tabindex === "-1" ) ? 0 : -1);
+    });
+
   };
 
   /**
-   * Closes all subnavs. For use when the menu closes.
+   * Closes all subnavs. For use when the main menu closes.
    */
   MobileNav.prototype.closeAllSubnav = function(){
-    var openSubnavs = document.querySelectorAll('.menu__item--open');
-    Array.prototype.slice.call(openSubnavs).forEach(function(el){
-      el.classList.remove('menu__item--open');
-    });
+    var openSubnavs = $menu.querySelectorAll('.menu__item--open');
+    Array.prototype.slice.call(openSubnavs).forEach(this.toggleSubnav);
   };
 
   return MobileNav;
@@ -189,8 +200,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   // a click on the dimmer will also close the menu
   document.querySelector('.content__wrapper').addEventListener('click', function(e){
-    if (e.target && e.target.closest('.content__dimmer--on')){
+    if (e.target && e.target.closest('.content__dimmer--mobile')){
+      // on mobile, just close the entire nav. 
       mobileNav.toggleNav();
+    } else if (e.target && e.target.closest('.content__dimmer--desktop')){
+      // on desktop, close the dimmer and close the subnavs.
+      document.querySelector('.content__dimmer--desktop').classList.remove('content__dimmer--on');
+      mobileNav.closeAllSubnav();
     }
   });
 
@@ -198,7 +214,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
   document.querySelector('.menu').addEventListener('click', function(e){
     if (e.target && e.target.closest('.menu__link--hasSubNav')){
       e.preventDefault();
+      mobileNav.closeAllSubnav();
       mobileNav.toggleSubnav(e.target);
+    } else {
+      // navigate to the link and close the nav.
+      mobileNav.closeAllSubnav();
     }
   });
 

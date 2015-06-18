@@ -11,7 +11,10 @@ body {
   max-width: 100vw; 
   background: $white;
   color: $black;
-  overflow: hidden;
+  overflow: auto;
+  &.lock{
+  	overflow: hidden;
+  }
 }
 
 a {
@@ -31,20 +34,35 @@ a {
 	color: $white;
 }
 
+// HUGE TEXT LOGO
 .header__logo {
-	display: none;
+	margin: 0;
+	width: 50px;
+	height: 20px;
+	top: $headerPaddingMobileVertical; 
+	display: block;
+	transform: translateX(-100vw);
+	transition: all $transitionSpeed;
+	position: absolute;
+	background: url("/images/HUGE-whitesm.png") center center no-repeat;
+	background-size: contain;
+}
+.header__logo a {
+	height: 20px;
+	display: block;
+	text-indent: -9999px;
+}
+.header__logo--on {
+	transform: translateX($headerPaddingMobileHorizontal);
 }
 
 // MENU TOGGLE
 .menu__toggle {
 	display: block;
-	margin: 20px 0 0 24px;
+	margin: $headerPaddingMobileVertical 0 0 $headerPaddingMobileHorizontal;
 	position: absolute;
 	cursor: pointer;
-	transition: all .5s;
-	&:focus, &:active {
-		outline: none;
-	}
+	transition: all $transitionSpeed;
 }
 .header__icon {
 	display: block;
@@ -115,21 +133,34 @@ a {
 	}
 }
 .content__dimmer {
-
+	display: none;
 }
 .content__dimmer--on {
+	background: $transBlack; 
+	display: block;
+}
+.content__dimmer--mobile {
 	position: absolute;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background: $transBlack; 
+}
+.content__dimmer--desktop {
+	position: fixed;
+	top: $headerHeightDesktop;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
 }
 
 // MENU
+.content__wrapper {
+	transition: all $transitionSpeed;
+}
 .content__wrapper--push {
 	transform: translateX(calc(100vw - 72px));
-	transition: all .3s;
 	min-height: calc(100vh - #{$headerHeightMobile});
 	max-height: calc(100vh - #{$headerHeightMobile});
 	overflow: hidden;
@@ -138,11 +169,11 @@ a {
 	width: calc(100vw - 72px);
 	top: $headerHeightMobile;
 	bottom: 0;
-	left: -100%;
+	left: -100vw;
 	display: block;
 	background: $white;
 	position: absolute;
-	transition: all .3s;
+	transition: all $transitionSpeed;
 }
 .menu--open {
 	transform: translateX(100vw);
@@ -159,7 +190,7 @@ a {
 	overflow-y: auto;
 }
 .menu__link {
-	padding-left: 24px;
+	padding: 0 $headerPaddingMobileHorizontal;
 	height: 48px;
 	font: 21px/48px "HUGEAvantGardeBold";
 	display: block;
@@ -190,7 +221,7 @@ a {
 	border-width: 4px 4px 0 0;
 	border-color: $magenta;
 	transform: rotate(495deg);
-	transition: all .3s;
+	transition: all $transitionSpeed;
 	display: inline-block;
 	position: absolute;
 
@@ -198,8 +229,8 @@ a {
 .menu__submenu {
 	max-height: 0;
 	overflow: hidden;
-	transition: all 0.3s;
-	// transition-timing-function: ease-in;	
+	transition: all $transitionSpeed;
+	transition-timing-function: ease-in;	
 }
 .menu__copyright {
 	padding: 0 24px;
@@ -219,10 +250,123 @@ a {
 	}
 	.menu__submenu {
 		max-height: 500px;
-		transition: all .5s;
-		// transition-timing-function: ease-out;	
+		transition: all $transitionSpeed;
+		transition-timing-function: ease-out;	
 	}
   .menu__chevron--active:before {
     transform: rotate(315deg) translateX(-6px) translateY(6px);
   }
+}
+
+// RESPONSIVE
+@media screen and (min-width: $bp){
+	.header__bar {
+		height: $headerHeightDesktop;
+	}
+	.header__icon--burger {
+		display: none;
+	}
+	.header__logo {
+		width: 60px;
+		height: 24px;
+		top: $headerPaddingDesktopVertical;
+		transform: translateX(#{$headerPaddingDesktopHorizontal});
+		a {
+			height: 24px;
+		}
+	}
+	.menu {
+		top: 0;
+		left: 132px;
+		width: auto;
+		color: $white;
+		background: none;
+	}
+	.menu__copyright {
+		display: none;
+	}
+	.menu__flexContainer {
+		display: block;
+	}
+	.menu__itemContainer {
+		padding-top: 0;
+	}
+	.menu__item {
+		display: inline-block;
+	}
+	.menu__link--primary{
+		height: auto;
+		line-height: $headerHeightDesktop;
+		display: inline-block;
+		&:hover {
+			background: $white;
+			color: $magenta;
+		}
+	}
+	.menu__chevron {
+		display: none;
+	}
+	.menu__submenu {
+		display: none;
+	}
+
+	// CONTENT AREA 
+	.content__wrapper {
+		margin-top: $headerHeightDesktop;
+	}
+	.splash__img {
+		height: 640px;
+	}
+	.content__header {
+		width: 100%;
+		height: 640px;
+		top: $headerHeightDesktop;
+		color: $white;
+		display: flex;
+		position: absolute; 
+		justify-content: center;
+		align-items: center;
+		h1 {
+			font: 120px/132px HUGEAvantGardeBold;
+			max-width: 6.75em;
+		}
+	}
+	.content__copy {
+		padding-top: 60px;
+		p {
+			margin: 0 auto 1em;
+			max-width: 968px;
+			font: 24px/36px Galaxie Copernicus Book;
+		}
+	}
+	.content__dimmer--mobile {
+		display: none!important;
+	}
+	.content__dimmer--desktop.content__dimmer--on {
+		display: block;
+	}
+
+	// OPEN SUBNAV STATE
+	.menu__item--open {
+		background: $white;
+		.menu__submenu {
+			padding: 12px 0;
+			display: block;
+			position: absolute;
+			background: $white;
+			z-index: 10;
+		}
+		.menu__item {
+			display: block;
+		}
+		.menu__link {
+			color: $black;
+			&:hover {
+				color: $magenta;
+			}
+		}
+		.menu__link--primary {
+			color: $magenta;
+		}
+	}
 }
