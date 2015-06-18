@@ -209,8 +209,9 @@ body {
   background: #ffffff;
   color: #000000;
   overflow: auto; }
-  body.lock {
-    overflow: hidden; }
+
+.lock {
+  overflow: hidden; }
 
 a {
   text-decoration: none;
@@ -333,12 +334,6 @@ a {
 .content__wrapper {
   transition: all 0.3s; }
 
-.content__wrapper--push {
-  transform: translateX(calc(100vw - 72px));
-  min-height: calc(100vh - 60px);
-  max-height: calc(100vh - 60px);
-  overflow: hidden; }
-
 .menu {
   width: calc(100vw - 72px);
   top: 60px;
@@ -385,10 +380,10 @@ a {
   width: 12px;
   height: 12px;
   top: 50%;
-  right: 24px;
+  right: 18px;
   content: "";
   border-style: solid;
-  border-width: 4px 4px 0 0;
+  border-width: 3px 3px 0 0;
   border-color: #ec008c;
   transform: rotate(495deg);
   transition: all 0.3s;
@@ -419,6 +414,16 @@ a {
 .menu__item--open .menu__chevron--active:before {
   transform: rotate(315deg) translateX(-6px) translateY(6px); }
 
+@media screen and (max-width: 767px) {
+  /* Max-width isn't best practice, but the transform + the 
+   * dimmer's position: fixed are interfering in a way that causes bugs 
+   * if the window gets resized over the breakpoint. 
+   */
+  .content__wrapper--push {
+    transform: translateX(calc(100vw - 72px));
+    min-height: calc(100vh - 60px);
+    max-height: calc(100vh - 60px);
+    overflow: hidden; } }
 @media screen and (min-width: 768px) {
   .header__bar {
     height: 72px; }
@@ -435,9 +440,9 @@ a {
       height: 24px; }
 
   .menu {
+    width: calc(100vw - 132px);
     top: 0;
     left: 132px;
-    width: auto;
     color: #ffffff;
     background: none; }
 
@@ -474,7 +479,7 @@ a {
     height: 640px; }
 
   .content__header {
-    width: 100%;
+    width: calc(100vw - 2 * 24px);
     height: 640px;
     top: 72px;
     color: #ffffff;
@@ -514,6 +519,12 @@ a {
       .menu__item--open .menu__link:hover {
         color: #ec008c; }
     .menu__item--open .menu__link--primary {
-      color: #ec008c; } }
+      color: #ec008c; }
+
+  .lock {
+    overflow: auto; }
+
+  .menu--open {
+    transform: none; } }
 
 /*# sourceMappingURL=main.css.map */

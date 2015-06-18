@@ -145,6 +145,7 @@ var MobileNav = (function(){
     $headerLogo.classList.toggle('header__logo--on');
     $body.classList.toggle('lock');
     $mobileDimmer.classList.toggle('content__dimmer--on');
+    $desktopDimmer.classList.toggle('content__dimmer__on');
     $content.classList.toggle('content__wrapper--push');
   };
 
@@ -174,10 +175,14 @@ var MobileNav = (function(){
 
   /**
    * Closes all subnavs. For use when the main menu closes.
+   * exceptFor [object]: optional node to leave open.
    */
-  MobileNav.prototype.closeAllSubnav = function(){
+  MobileNav.prototype.closeAllSubnav = function(exceptFor){
     var openSubnavs = $menu.querySelectorAll('.menu__item--open');
-    Array.prototype.slice.call(openSubnavs).forEach(this.toggleSubnav);
+    Array.prototype.slice.call(openSubnavs).forEach(function(el){
+      if(el !== exceptFor)
+        this.toggleSubnav(el);
+    }, this);
   };
 
   return MobileNav;
@@ -214,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   document.querySelector('.menu').addEventListener('click', function(e){
     if (e.target && e.target.closest('.menu__link--hasSubNav')){
       e.preventDefault();
-      mobileNav.closeAllSubnav();
+      mobileNav.closeAllSubnav(e.target.closest('.menu__item--open'));
       mobileNav.toggleSubnav(e.target);
     } else {
       // navigate to the link and close the nav.

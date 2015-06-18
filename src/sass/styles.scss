@@ -12,9 +12,9 @@ body {
   background: $white;
   color: $black;
   overflow: auto;
-  &.lock{
-  	overflow: hidden;
-  }
+}
+.lock{
+	overflow: hidden;
 }
 
 a {
@@ -159,12 +159,6 @@ a {
 .content__wrapper {
 	transition: all $transitionSpeed;
 }
-.content__wrapper--push {
-	transform: translateX(calc(100vw - 72px));
-	min-height: calc(100vh - #{$headerHeightMobile});
-	max-height: calc(100vh - #{$headerHeightMobile});
-	overflow: hidden;
-}
 .menu {
 	width: calc(100vw - 72px);
 	top: $headerHeightMobile;
@@ -215,10 +209,10 @@ a {
 	width: 12px;
 	height: 12px;
 	top: 50%;
-	right: 24px;
+	right: 18px;
 	content: "";
 	border-style: solid;
-	border-width: 4px 4px 0 0;
+	border-width: 3px 3px 0 0;
 	border-color: $magenta;
 	transform: rotate(495deg);
 	transition: all $transitionSpeed;
@@ -259,6 +253,19 @@ a {
 }
 
 // RESPONSIVE
+@media screen and (max-width: 767px){
+	/* Max-width isn't best practice, but the transform + the 
+	 * dimmer's position: fixed are interfering in a way that causes bugs 
+	 * if the window gets resized over the breakpoint. 
+	 */ 
+	.content__wrapper--push {
+		transform: translateX(calc(100vw - 72px));
+		min-height: calc(100vh - #{$headerHeightMobile});
+		max-height: calc(100vh - #{$headerHeightMobile});
+		overflow: hidden;
+	}
+}
+
 @media screen and (min-width: $bp){
 	.header__bar {
 		height: $headerHeightDesktop;
@@ -276,11 +283,12 @@ a {
 		}
 	}
 	.menu {
+		width: calc(100vw - 132px);
 		top: 0;
 		left: 132px;
-		width: auto;
 		color: $white;
 		background: none;
+
 	}
 	.menu__copyright {
 		display: none;
@@ -318,7 +326,7 @@ a {
 		height: 640px;
 	}
 	.content__header {
-		width: 100%;
+		width: calc(100vw - 2 * #{$headerPaddingDesktopHorizontal});
 		height: 640px;
 		top: $headerHeightDesktop;
 		color: $white;
@@ -368,5 +376,13 @@ a {
 		.menu__link--primary {
 			color: $magenta;
 		}
+	}
+
+	// RESET OPEN MAIN MENU STATE
+	.lock {
+		overflow: auto;
+	}
+	.menu--open {
+		transform: none;
 	}
 }
