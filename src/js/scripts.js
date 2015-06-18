@@ -155,10 +155,8 @@ var MobileNav = (function(){
   MobileNav.prototype.toggleSubnav = function(node){
     var parentNode = node.closest('.menu__item');
 
-    // if toggling to open, turn on the desktop dimmer. 
-    if (!parentNode.classList.contains('menu__item--open')){
-      $desktopDimmer.classList.add('content__dimmer--on');
-    }
+    $desktopDimmer.classList.toggle('content__dimmer--on');
+
 
     // toggle the subnav
     parentNode.classList.toggle('menu__item--open');
@@ -209,7 +207,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       mobileNav.toggleNav();
     } else if (e.target && e.target.closest('.content__dimmer--desktop')){
       // on desktop, close the dimmer and close the subnavs.
-      document.querySelector('.content__dimmer--desktop').classList.remove('content__dimmer--on');
       mobileNav.closeAllSubnav();
     }
   });
