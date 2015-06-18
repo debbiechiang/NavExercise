@@ -94,12 +94,12 @@ var BuildMenu = (function(){
   BuildMenu.prototype.createLink = function(el, isPrimary, hasSubNav){
     var link = document.createElement('a');
     link.setAttribute('href', el.url);
-    link.classList.add('menu__link');
-    link.classList.add((isPrimary) ? 'menu__link--primary' : 'menu__link--secondary');
+    link.classList.add('menu__link', (isPrimary) ? 'menu__link--primary' : 'menu__link--secondary');
     link.innerHTML = el.label;
     
     if (hasSubNav) {
       var chevron = this.createChevron(); 
+      link.classList.add('menu__link--hasSubNav');
       link.appendChild(chevron);
     }
 
@@ -118,5 +118,89 @@ var BuildMenu = (function(){
   return BuildMenu;
 })();
 
-// INITIALIZE EVERYTHING
-var buildMenu = new BuildMenu('/api/nav.json', '.menu__flexContainer');
+/**
+ * Handles the mobile nav main menu / sub menu toggle and hide.
+ */
+var MobileNav = (function(){
+  // private
+  var $dimmer = document.querySelector('.content__dimmer');
+  var $content = document.querySelector('.content__wrapper');
+  var $menuToggle = document.querySelector('.menu__toggle');
+
+  var $menu; 
+  
+  /**
+   * Constructor for mobile nav functionality
+   */
+  function MobileNav(mainMenu){
+    $menu = document.querySelector(mainMenu);
+  }
+
+  /**
+   * Toggle the main nav. Turns on dimmer, pushes over content, 
+   * opens menu, makes burger into an X.
+   */ 
+  MobileNav.prototype.toggleNav = function(){
+    // if toggling to closed, also close all submenus. 
+    if ($menu.closest('.menu--open')){
+      this.closeAllSubnav();
+    }
+    $dimmer.classList.toggle('content__dimmer--on');
+    $content.classList.toggle('content__wrapper--push');
+    $menuToggle.classList.toggle('menu__toggle--on');
+    $menu.classList.toggle('menu--open');
+  };
+
+  /** 
+   * Toggle an individual subnav. Show/hide subnav, turns carat.
+   */
+  MobileNav.prototype.toggleSubnav = function(node){
+    var parentNode = node.closest('.menu__item');
+    parentNode.classList.toggle('menu__item--open');
+  };
+
+  /**
+   * Closes all subnavs. For use when the menu closes.
+   */
+  MobileNav.prototype.closeAllSubnav = function(){
+    var openSubnavs = document.querySelectorAll('.menu__item--open');
+    Array.prototype.slice.call(openSubnavs).forEach(function(el){
+      el.classList.remove('menu__item--open');
+    });
+  };
+
+  return MobileNav;
+})();
+
+/**
+ * Initialization at page load, event handling.
+ */
+document.addEventListener("DOMContentLoaded", function(event) { 
+
+  // Initialize everything
+  var buildMenu = new BuildMenu('/api/nav.json', '.menu__flexContainer');
+  var mobileNav = new MobileNav('.menu');
+
+  // Main menu toggle
+  document.querySelector('.menu__toggle').addEventListener('click', function(e){
+    e.preventDefault();
+    mobileNav.toggleNav();
+  });
+
+  // a click on the dimmer will also close the menu
+  document.querySelector('.content__wrapper').addEventListener('click', function(e){
+    if (e.target && e.target.closest('.content__dimmer--on')){
+      mobileNav.toggleNav();
+    }
+  });
+
+  // event delegation for the submenu items that are being built on the fly
+  document.querySelector('.menu').addEventListener('click', function(e){
+    if (e.target && e.target.closest('.menu__link--hasSubNav')){
+      e.preventDefault();
+      mobileNav.toggleSubnav(e.target);
+    }
+  });
+
+
+});

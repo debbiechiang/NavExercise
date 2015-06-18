@@ -365,8 +365,7 @@ a {
 .menu__submenu {
   max-height: 0;
   overflow: hidden;
-  transition: all 0.5s;
-  transition-timing-function: ease-in; }
+  transition: all 0.3s; }
 
 .menu__copyright {
   padding: 0 24px;
@@ -381,7 +380,7 @@ a {
   transform: rotate(315deg) translateX(-6px) translateY(6px); }
 .menu__item--open .menu__submenu {
   max-height: 500px;
-  transition-timing-function: ease-out; }
+  transition: all .5s; }
 .menu__item--open .menu__chevron--active:before {
   transform: rotate(315deg) translateX(-6px) translateY(6px); }
 
