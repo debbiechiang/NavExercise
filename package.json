@@ -27,7 +27,6 @@
     "grunt-contrib-jshint": "latest",
     "jshint-stylish": "latest",
     "grunt-contrib-sass": "latest",
-    "grunt-contrib-concat": "latest",
     "grunt-contrib-watch": "latest"
   }
 }

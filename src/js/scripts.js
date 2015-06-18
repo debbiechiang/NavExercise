@@ -145,7 +145,6 @@ var MobileNav = (function(){
     $headerLogo.classList.toggle('header__logo--on');
     $body.classList.toggle('lock');
     $mobileDimmer.classList.toggle('content__dimmer--on');
-    $desktopDimmer.classList.toggle('content__dimmer__on');
     $content.classList.toggle('content__wrapper--push');
   };
 
@@ -203,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     mobileNav.toggleNav();
   });
 
-  // a click on the dimmer will also close the menu
+  // Dimmer toggling
   document.querySelector('.content__wrapper').addEventListener('click', function(e){
     if (e.target && e.target.closest('.content__dimmer--mobile')){
       // on mobile, just close the entire nav. 
@@ -215,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
   });
 
-  // event delegation for the submenu items that are being built on the fly
+  // Event delegation for the submenu items that are being built on the fly
   document.querySelector('.menu').addEventListener('click', function(e){
     if (e.target && e.target.closest('.menu__link--hasSubNav')){
       e.preventDefault();
